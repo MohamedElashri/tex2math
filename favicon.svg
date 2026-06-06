@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="LaTeX to MathML converter">
+  <rect width="64" height="64" rx="12" fill="#1f9d58"/>
+  <path d="M11 14h27v8H24l10 10-10 10h14v8H11v-7l11-11-11-11z" fill="#ffffff"/>
+  <rect x="35" y="18" width="21" height="28" rx="5" fill="#157347"/>
+  <path d="M44 25 38 32l6 7" fill="none" stroke="#ffffff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M49 25 55 32l-6 7" fill="none" stroke="#ffffff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M48 24 44 40" fill="none" stroke="#ffffff" stroke-width="4.2" stroke-linecap="round"/>
+</svg>

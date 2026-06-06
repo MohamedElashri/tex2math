@@ -1,652 +1,579 @@
-/* Dark theme (default) */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-  color: #e0e0e0;
-  transition: background 0.3s ease, color 0.3s ease;
+:root {
+  --bg: #151515;
+  --surface: #202124;
+  --surface-raised: #27292d;
+  --surface-soft: #1b1c1f;
+  --text: #f4f3ef;
+  --muted: #a8a39b;
+  --border: #3b3d42;
+  --accent: #2fbf71;
+  --accent-strong: #1f9d58;
+  --accent-soft: rgba(47, 191, 113, 0.16);
+  --info: #4aa3df;
+  --danger: #ff6b6b;
+  --warning: #e6ad3c;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.26);
+  --code-bg: #111316;
+  --code-text: #e9e4d9;
+  --focus: 0 0 0 3px rgba(47, 191, 113, 0.24);
+  --radius: 8px;
+  --font-sans: Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-code: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 }
 
-/* Light theme */
 body.light-theme {
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  color: #212529;
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-raised: #f0f3f5;
+  --surface-soft: #eef1f3;
+  --text: #20242a;
+  --muted: #626b75;
+  --border: #d7dde3;
+  --accent: #1f9d58;
+  --accent-strong: #157347;
+  --accent-soft: rgba(31, 157, 88, 0.12);
+  --info: #256fa8;
+  --danger: #b42318;
+  --warning: #9a6700;
+  --shadow: 0 16px 40px rgba(37, 48, 61, 0.12);
+  --code-bg: #fbfcfd;
+  --code-text: #26313c;
+  --focus: 0 0 0 3px rgba(31, 157, 88, 0.18);
 }
 
-header {
-  text-align: center;
-  margin-bottom: 30px;
-  padding: 20px 0;
-  border-bottom: 2px solid #404040;
-  position: relative;
+* {
+  box-sizing: border-box;
 }
 
-body.light-theme header {
-  border-bottom: 2px solid #e0e0e0;
+html {
+  min-width: 320px;
+  background: var(--bg);
 }
 
-header h1 {
+body {
+  min-height: 100vh;
   margin: 0;
-  font-size: 2.2em;
-  font-weight: 700;
-  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: 1px;
+  padding: 24px;
+  color: var(--text);
+  background: var(--bg);
+  font-family: var(--font-sans);
+  line-height: 1.5;
 }
 
-header h1 a {
+button,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
+
+button:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.app-header,
+.workspace,
+.app-footer {
+  width: min(100%, 1320px);
+  margin-inline: auto;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 22px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  gap: 12px;
+  color: var(--text);
   text-decoration: none;
-  color: inherit;
-  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-  border: none;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  cursor: pointer;
+.brand-mark {
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  border: 1px solid color-mix(in srgb, var(--accent), var(--border) 45%);
+  border-radius: var(--radius);
+  background: var(--accent-strong);
+  object-fit: cover;
+}
+
+.brand-text {
+  display: grid;
+  min-width: 0;
+}
+
+.brand-title {
+  color: var(--text);
+  font-size: 20px;
+  font-weight: 750;
+  line-height: 1.15;
+}
+
+.brand-subtitle {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.header-actions {
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.2em;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  justify-content: flex-end;
+  gap: 10px;
 }
 
-.theme-toggle:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+.status-pill {
+  min-width: 76px;
+  max-width: 160px;
+  padding: 7px 11px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  background: var(--surface);
+  font-size: 13px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.theme-toggle:active {
-  transform: scale(0.95);
+.status-pill.is-success {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent), transparent 58%);
+  background: var(--accent-soft);
 }
 
-.page-content {
-  flex: 1;
+.status-pill.is-error {
+  color: var(--danger);
+  border-color: color-mix(in srgb, var(--danger), transparent 54%);
+  background: color-mix(in srgb, var(--danger), transparent 90%);
 }
 
-main {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 20px;
+  align-items: start;
 }
 
-section {
-  flex: 1;
-  background: transparent;
-  padding: 0;
-  margin: 0 15px;
-  width: 480px;
-  min-width: 480px;
-  max-width: 480px;
+.panel {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: clip;
 }
 
-body.light-theme section {
-  background: transparent;
-}
-
-section h2 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  font-size: 1.3em;
-  color: #4CAF50;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.input-header {
+.panel-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
-  min-height: 70px;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 78px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-raised);
 }
 
-.input-header h2 {
+.panel-header h1 {
+  margin: 2px 0 0;
+  color: var(--text);
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 760;
+}
+
+.eyebrow {
   margin: 0;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0;
 }
 
 .output-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-  flex-wrap: wrap;
-  gap: 15px;
-  min-height: 70px;
-}
-
-.output-header h2 {
-  margin: 0;
+  align-items: flex-start;
 }
 
 .output-controls {
   display: flex;
   align-items: center;
-  gap: 15px;
-}
-
-.display-mode-selector {
-  display: flex;
+  justify-content: flex-end;
+  min-width: 0;
   gap: 10px;
-  align-items: center;
 }
 
-.display-mode-selector label {
-  font-size: 14px;
-  color: #ffffff;
-}
-
-.mode-dropdown {
-  padding: 6px 12px;
-  font-size: 14px;
-  color: #ffffff;
-  background-color: #2a2a2a;
-  border: 1px solid #434343;
-  border-radius: 4px;
+.icon-button,
+.mode-button {
+  min-height: 40px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  color: var(--text);
+  background: transparent;
   cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
-body.light-theme .mode-dropdown {
-  color: #333333;
-  background-color: #ffffff;
-  border: 1px solid #cccccc;
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 40px;
+  padding: 0;
 }
 
-.mode-dropdown:hover {
-  background-color: #323232;
-  border-color: #4CAF50;
+.icon-button:hover,
+.mode-button:hover {
+  border-color: color-mix(in srgb, var(--accent), var(--border) 60%);
+  background: var(--accent-soft);
 }
 
-body.light-theme .mode-dropdown:hover {
-  background-color: #f5f5f5;
-  border-color: #4CAF50;
+.icon-button:active,
+.mode-button:active {
+  transform: translateY(1px);
 }
 
-.mode-dropdown:focus {
-  outline: none;
-  border-color: #4CAF50;
-  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+.theme-toggle {
+  border-color: var(--border);
+  background: var(--surface);
 }
 
-.math-preview {
-  display: none;
-  background-color: #1e1e1e;
-  border: 1px solid #404040;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 0;
-  height: 300px;
-  overflow-x: auto;
-  overflow-y: auto;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+.subtle-button {
+  color: var(--muted);
+  background: color-mix(in srgb, var(--surface), var(--surface-soft) 45%);
+  border-color: var(--border);
 }
 
-body.light-theme .math-preview {
-  background-color: #ffffff;
-  border: 1px solid #d0d0d0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.math-preview.active {
-  display: block;
-}
-
-/* Native MathML styling - browsers render this beautifully! */
-.math-preview math {
-  font-size: 1.3em;
+.copy-button {
   color: #ffffff;
-  line-height: 1.6;
+  background: var(--info);
 }
 
-body.light-theme .math-preview math {
-  color: #333333;
+.copy-button:hover {
+  border-color: color-mix(in srgb, var(--info), #ffffff 24%);
+  background: color-mix(in srgb, var(--info), #000000 10%);
 }
 
-/* Improve spacing for display math */
-.math-preview math[display="block"] {
-  margin: 20px auto;
-  display: block;
+.copy-button.is-success {
+  background: var(--accent-strong);
 }
 
-/* Better rendering for nested math elements */
-.math-preview mrow {
-  padding: 0.3ex 0;
+.copy-button.is-error {
+  background: var(--danger);
 }
 
-.math-preview mfrac {
-  margin: 0 0.2em;
+.mode-segment {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, auto));
+  gap: 3px;
+  min-width: 0;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-soft);
 }
 
-.math-preview msub,
-.math-preview msup {
-  margin: 0 0.1em;
+.mode-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 82px;
+  padding: 0 10px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 720;
+  white-space: nowrap;
 }
 
-/* Improve operator spacing */
-.math-preview mo {
-  margin: 0 0.2em;
+.mode-button.active {
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--accent), var(--border) 45%);
+  background: var(--surface);
 }
 
-/* Legacy MathJax container support (if needed) */
-.math-preview mjx-container {
-  margin: 15px 0;
-  font-size: 1.4em !important;
-}
-
-.math-preview mjx-container mjx-math {
-  font-family: "STIX Two Math", "Latin Modern Math", "Cambria Math", serif !important;
-}
-
-/* Improve MathJax rendering quality */
-mjx-container {
-  line-height: 1.5 !important;
-}
-
-mjx-container svg {
-  vertical-align: middle;
-}
-
-/* Responsive design */
-@media (max-width: 1100px) {
-  main {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  section {
-    width: 100%;
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  body {
-    max-width: 100%;
-    padding: 15px;
-  }
-  
-  section {
-    padding: 20px;
-  }
-  
-  textarea {
-    min-height: 250px !important;
-  }
-  
-  .math-preview {
-    height: 250px;
-    padding: 15px;
-  }
-  
-  header h1 {
-    font-size: 1.8em;
-  }
-  
-  .output-controls {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-}
-
-/* Editor wrapper for syntax highlighting */
-.editor-wrapper {
+.editor-wrapper,
+.math-preview {
   position: relative;
   width: 100%;
-  height: 300px;
+  min-height: 340px;
+  height: min(48vh, 440px);
 }
 
-.editor-wrapper textarea {
+.editor-wrapper textarea,
+.syntax-highlight {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
-  background: transparent;
-  color: transparent;
-  caret-color: #e0e0e0;
-  resize: none;
   margin: 0;
+  padding: 18px;
+  border: 0;
+  border-radius: 0;
+  font-family: var(--font-code);
+  font-size: 14px;
+  line-height: 1.55;
+  tab-size: 2;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   overflow: auto;
 }
 
-body.light-theme .editor-wrapper textarea {
-  caret-color: #333333;
+.editor-wrapper textarea {
+  z-index: 1;
+  resize: none;
+  color: transparent;
+  background: transparent;
+  caret-color: var(--text);
+  scrollbar-color: var(--border) transparent;
+}
+
+.editor-wrapper textarea::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+.editor-wrapper textarea::selection {
+  background: rgba(74, 163, 223, 0.35);
 }
 
 .syntax-highlight {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 20px;
-  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
-  font-size: 14px;
-  line-height: 1.5;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  overflow: hidden;
-  pointer-events: none;
   z-index: 0;
-  background-color: #1e1e1e;
-  border-radius: 8px;
-  color: #e0e0e0;
-  border: 1px solid #404040;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  box-sizing: border-box;
-}
-
-body.light-theme .syntax-highlight {
-  background-color: #ffffff;
-  color: #333333;
-  border: 1px solid #d0d0d0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+  color: var(--code-text);
+  background: var(--code-bg);
 }
 
 .syntax-highlight code {
   display: block;
-  padding: 0;
+  min-width: 100%;
   margin: 0;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
+  padding: 0;
+  color: inherit;
+  font: inherit;
   white-space: inherit;
-  word-wrap: inherit;
 }
 
-/* LaTeX syntax highlighting colors */
+.editor-wrapper:focus-within {
+  box-shadow: inset var(--focus);
+}
+
+.math-preview {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: var(--text);
+  background: var(--code-bg);
+  overflow: auto;
+  scrollbar-color: var(--border) transparent;
+}
+
+.math-preview math {
+  max-width: 100%;
+  color: var(--text);
+  font-size: 22px;
+  line-height: 1.7;
+}
+
+.math-preview .temml-error,
+.math-preview .error-message {
+  color: var(--danger);
+  font-family: var(--font-code);
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
 .latex-command {
-  color: #569cd6;
-  font-weight: 600;
+  color: #6bb8ff;
+  font-weight: 700;
 }
 
 .latex-bracket {
-  color: #ffd700;
-  font-weight: bold;
-}
-
-.latex-math {
-  color: #ce9178;
+  color: #f2c94c;
+  font-weight: 700;
 }
 
 .latex-subscript,
 .latex-superscript {
-  color: #4ec9b0;
+  color: #60d394;
 }
 
 body.light-theme .latex-command {
-  color: #0000ff;
+  color: #005db8;
 }
 
 body.light-theme .latex-bracket {
-  color: #d4a000;
-}
-
-body.light-theme .latex-math {
-  color: #a31515;
+  color: #8a6400;
 }
 
 body.light-theme .latex-subscript,
 body.light-theme .latex-superscript {
-  color: #098658;
+  color: #157347;
 }
 
-/* XML/MathML syntax highlighting colors */
-.xml-tag {
-  color: #569cd6;
+.xml-tag,
+.xml-tag-name {
+  color: #6bb8ff;
 }
 
 .xml-tag-name {
-  color: #4ec9b0;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .xml-attribute {
-  color: #9cdcfe;
+  color: #8bd3ff;
 }
 
 .xml-attribute-value {
-  color: #ce9178;
+  color: #ffb86b;
 }
 
 .xml-bracket {
-  color: #808080;
+  color: #8b949e;
 }
 
-body.light-theme .xml-tag {
-  color: #800000;
-}
-
+body.light-theme .xml-tag,
 body.light-theme .xml-tag-name {
-  color: #800000;
+  color: #005db8;
 }
 
 body.light-theme .xml-attribute {
-  color: #ff0000;
+  color: #8a3ffc;
 }
 
 body.light-theme .xml-attribute-value {
-  color: #0000ff;
+  color: #a14d00;
 }
 
 body.light-theme .xml-bracket {
-  color: #000000;
+  color: #626b75;
 }
 
-textarea {
-  width: 100%;
-  resize: none;
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-  border: 1px solid #404040;
-  border-radius: 8px;
-  padding: 20px;
-  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
-  font-size: 14px;
-  line-height: 1.5;
-  min-height: 330px;
-  transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  box-sizing: border-box;
-}
-
-.editor-wrapper textarea {
-  /* Override for syntax highlighted textareas */
-  background-color: transparent !important;
-  color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 20px !important;
-}
-
-textarea:focus {
-  outline: none;
-  border-color: #4CAF50;
-  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2), 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
-.editor-wrapper textarea:focus {
-  /* Show focus on the wrapper instead */
-  outline: none;
-  border: none;
-  box-shadow: none;
-}
-
-.editor-wrapper:focus-within .syntax-highlight {
-  border-color: #4CAF50;
-  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2), 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
-body.light-theme textarea {
-  background-color: #ffffff;
-  color: #333333;
-  border: 1px solid #d0d0d0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-body.light-theme textarea:focus {
-  background-color: #ffffff;
-  border-color: #4CAF50;
-  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2), 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-body.light-theme .editor-wrapper:focus-within .syntax-highlight {
-  border-color: #4CAF50;
-  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2), 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-/* Make all input/output boxes exactly the same size */
-#latexInput,
-#mathmlOutput {
-  min-height: 300px;
-  height: 300px;
-  max-height: 300px;
-}
-
-.editor-wrapper {
-  height: 300px !important;
-  min-height: 300px !important;
-  max-height: 300px !important;
-}
-
-.math-preview {
-  height: 300px;
-  min-height: 300px;
-  max-height: 300px;
-}
-
-button {
-  margin-top: 10px;
-  background-color: #404040;
-  border: 1px solid #4a4a4a;
-  color: #ffffff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 5px;
-  padding: 8px 16px;
-}
-
-button:hover {
-  background-color: #4a4a4a;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-button:not(:last-child) {
-  margin-right: 10px;
-}
-
-footer {
+.app-footer {
+  padding: 22px 0 0;
+  color: var(--muted);
+  font-size: 13px;
   text-align: center;
-  margin-top: 30px;
-  font-size: 14px;
-  color: #b0b0b0;
-  padding: 20px 0;
-  background-color: transparent;
-  border-top: 1px solid #404040;
 }
 
-.copy-icon-btn {
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: #ffffff;
-  background: linear-gradient(135deg, #337ab7 0%, #2e6da4 100%);
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 6px rgba(51, 122, 183, 0.3);
-}
-
-body.light-theme .copy-icon-btn {
-  color: #ffffff;
-  box-shadow: 0 2px 6px rgba(51, 122, 183, 0.2);
-}
-
-.copy-icon-btn:hover {
-  background: linear-gradient(135deg, #2e6da4 0%, #286090 100%);
-  box-shadow: 0 4px 10px rgba(51, 122, 183, 0.4);
-  transform: translateY(-2px);
-}
-
-.copy-icon-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 1px 3px rgba(51, 122, 183, 0.3);
-}
-
-.copy-icon-btn i {
-  margin: 0;
-}
-
-/* Responsive design */
-@media (max-width: 1100px) {
-  main {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  section {
-    width: 100%;
-    min-width: auto;
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 980px) {
   body {
-    max-width: 100%;
-    padding: 15px;
+    padding: 18px;
   }
-  
-  section {
-    padding: 20px;
-    width: 100%;
-    min-width: auto;
-    max-width: 100%;
+
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
   }
-  
-  .math-preview {
-    height: 250px;
-    padding: 15px;
+}
+
+@media (max-width: 680px) {
+  body {
+    padding: 12px;
   }
-  
-  header h1 {
-    font-size: 1.8em;
-  }
-  
-  .output-controls {
-    flex-direction: column;
+
+  .app-header {
     align-items: flex-start;
+    padding-bottom: 14px;
+  }
+
+  .brand {
     gap: 10px;
+  }
+
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .brand-title {
+    font-size: 17px;
+  }
+
+  .brand-subtitle {
+    font-size: 12px;
+  }
+
+  .header-actions {
+    gap: 8px;
+  }
+
+  .status-pill {
+    display: none;
+  }
+
+  .panel-header {
+    min-height: 0;
+    padding: 14px;
+  }
+
+  .output-header {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .output-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .mode-segment {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    flex: 1 1 auto;
+  }
+
+  .mode-button {
+    min-width: 0;
+    padding-inline: 8px;
+  }
+
+  .editor-wrapper,
+  .math-preview {
+    min-height: 310px;
+    height: 48vh;
+  }
+
+  .editor-wrapper textarea,
+  .syntax-highlight {
+    padding: 14px;
+    font-size: 13px;
+  }
+
+  .math-preview {
+    padding: 16px;
+  }
+
+  .math-preview math {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 430px) {
+  .mode-button span {
+    display: none;
+  }
+
+  .mode-button {
+    min-height: 42px;
   }
 }

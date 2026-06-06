@@ -1,77 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-   
-    <!-- This code sets the character encoding for the document to UTF-8 -->
     <meta charset="UTF-8" />
-    <!--This code makes the site responsive.-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--This code sets the meta description for the document.-->
-    <meta name="description" content="Convert LaTeX code to MathML code with this simple and easy-to-use converter.">
-    <!--This code sets the meta keywords for the document.-->
-    <meta name="keywords" content="LaTeX, MathML, converter, tool">
-    <!--This code sets the title of the document.-->
+    <meta
+      name="description"
+      content="Convert LaTeX expressions to MathML with a local browser-based converter."
+    />
+    <meta name="keywords" content="LaTeX, MathML, converter, tool" />
     <title>LaTeX to MathML Converter</title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <!-- This is the main stylesheet for the site -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="alternate icon" type="image/x-icon" href="favicon.ico" />
     <link rel="stylesheet" href="css/styles.css" />
-    <!-- Temml CSS for beautiful math rendering -->
-    <link rel="stylesheet" href="css/Temml-Local.css">
-    <!-- Temml library for LaTeX to MathML conversion -->
-    <script src="js/temml.min.js"></script>
+    <link rel="stylesheet" href="css/Temml-Local.css" />
     <link rel="stylesheet" href="css/all.min.css" />
+    <script src="js/temml.min.js"></script>
   </head>
   <body>
-    <header>
-      <h1><a href="./index.html">LaTeX to MathML Converter</a></h1>
-      <button id="themeToggle" class="theme-toggle" title="Toggle light/dark mode">
-        <i class="fas fa-sun"></i>
-      </button>
+    <header class="app-header">
+      <a class="brand" href="./index.html" aria-label="LaTeX to MathML Converter home">
+        <img class="brand-mark" src="favicon.svg" alt="" aria-hidden="true" />
+        <span class="brand-text">
+          <span class="brand-title">LaTeX to MathML</span>
+          <span class="brand-subtitle">Converter</span>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <span id="statusText" class="status-pill" role="status" aria-live="polite">Ready</span>
+        <button
+          id="themeToggle"
+          class="icon-button theme-toggle"
+          type="button"
+          title="Toggle theme"
+          aria-label="Toggle theme"
+          aria-pressed="false"
+        >
+          <i class="fas fa-sun" aria-hidden="true"></i>
+        </button>
+      </div>
     </header>
-    <div class="page-content">
-      <main>
-        <!-- Input section for LaTeX code -->
-        <section>
-          <div class="input-header">
-            <h2>LaTeX</h2>
+
+    <main class="workspace" aria-label="LaTeX to MathML converter">
+      <section class="panel input-panel" aria-labelledby="latexTitle">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Source</p>
+            <h1 id="latexTitle">LaTeX</h1>
           </div>
-          <div class="editor-wrapper">
-            <pre id="latexHighlight" class="syntax-highlight" aria-hidden="true"><code id="latexHighlightCode"></code></pre>
-            <textarea id="latexInput" rows="10" cols="50" placeholder="Enter your LaTeX code here..." spellcheck="false">\def\d{\mathrm{d}}
+          <button
+            id="clearInputBtn"
+            class="icon-button subtle-button"
+            type="button"
+            title="Clear input"
+            aria-label="Clear input"
+          >
+            <i class="fas fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="editor-wrapper">
+          <pre id="latexHighlight" class="syntax-highlight" aria-hidden="true"><code id="latexHighlightCode"></code></pre>
+          <textarea
+            id="latexInput"
+            aria-label="LaTeX input"
+            placeholder="Enter LaTeX"
+            spellcheck="false"
+          >\def\d{\mathrm{d}}
 
 \oint_C \vec{B}\circ \d\vec{l} = \mu_0 \left( I_{\text{enc}} + \varepsilon_0 \frac{\d}{\d t} \int_S \vec{E} \circ \hat{n}\; \d a \right)</textarea>
-          </div>
-        </section>
+        </div>
+      </section>
 
-        <!-- Output section for MathML code -->
-        <section>
-          <div class="output-header">
-            <h2>Output</h2>
-            <div class="output-controls">
-              <div class="display-mode-selector">
-                <label for="outputMode">Display as:</label>
-                <select id="outputMode" class="mode-dropdown">
-                  <option value="math">Math</option>
-                  <option value="mathml">MathML</option>
-                  <option value="flat">Flat MathML</option>
-                </select>
-              </div>
-              <button id="copyBtn" class="copy-icon-btn" title="Copy to clipboard">
-                <i class="far fa-copy"></i>
+      <section class="panel output-panel" aria-labelledby="outputTitle">
+        <div class="panel-header output-header">
+          <div>
+            <p class="eyebrow">Result</p>
+            <h1 id="outputTitle">Output</h1>
+          </div>
+
+          <div class="output-controls">
+            <div class="mode-segment" role="tablist" aria-label="Output mode">
+              <button
+                class="mode-button active"
+                type="button"
+                data-mode="math"
+                role="tab"
+                aria-selected="true"
+                title="Rendered math"
+              >
+                <i class="fas fa-square-root-alt" aria-hidden="true"></i>
+                <span>Math</span>
+              </button>
+              <button
+                class="mode-button"
+                type="button"
+                data-mode="mathml"
+                role="tab"
+                aria-selected="false"
+                title="Formatted MathML"
+              >
+                <i class="fas fa-code" aria-hidden="true"></i>
+                <span>MathML</span>
+              </button>
+              <button
+                class="mode-button"
+                type="button"
+                data-mode="flat"
+                role="tab"
+                aria-selected="false"
+                title="Flat MathML"
+              >
+                <i class="fas fa-align-left" aria-hidden="true"></i>
+                <span>Flat</span>
               </button>
             </div>
+
+            <button
+              id="copyBtn"
+              class="icon-button copy-button"
+              type="button"
+              title="Copy output"
+              aria-label="Copy output"
+            >
+              <i class="far fa-copy" aria-hidden="true"></i>
+            </button>
           </div>
-          <div id="mathPreview" class="math-preview"></div>
-          <div class="editor-wrapper">
-            <pre id="mathmlHighlight" class="syntax-highlight" aria-hidden="true"><code id="mathmlHighlightCode"></code></pre>
-            <textarea id="mathmlOutput" rows="10" cols="50" readonly spellcheck="false"></textarea>
-          </div>
-        </section>
-      </main>
-      <footer>&copy; 2025 Mohamed Elashri - LaTeX to MathML Converter</footer>
-    </div>
-    <!-- This is our main app file that contain the code to do the conversion and some other functions -->
+        </div>
+
+        <div id="mathPreview" class="math-preview" aria-label="Rendered math output"></div>
+        <div id="outputEditorWrapper" class="editor-wrapper" hidden>
+          <pre id="mathmlHighlight" class="syntax-highlight" aria-hidden="true"><code id="mathmlHighlightCode"></code></pre>
+          <textarea
+            id="mathmlOutput"
+            aria-label="MathML output"
+            readonly
+            spellcheck="false"
+          ></textarea>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">&copy; 2026 Mohamed Elashri</footer>
     <script src="js/app.js"></script>
   </body>
 </html>
